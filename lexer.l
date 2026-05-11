@@ -3,7 +3,7 @@
     #include <stdio.h>
 %}
 
-%option noyywrap
+%option noyywrap noinput nounput
 
 
 DIGIT   [0-9]
@@ -25,7 +25,7 @@ DEGREE  {DIGIT}+[°º]
 "CYL"|"CIL"             { return CYL; }
 "ADD"                   { return ADD; }
 
-/*Optional*/
+
 "DP"                    { return DP; }
 "NP"                    { return NP; }
 "AV"                    { return AV; }
@@ -34,8 +34,8 @@ DEGREE  {DIGIT}+[°º]
 
 ":"     { return COLON; }
 
-{NUMBER}  { yylval.num = (float)atof(yytext); return NUMBER; }
-{DEGREE}  { yylval.num = atof(yytext); return DEGREE; }
+{NUMBER}  { yylval.fval = (float)atof(yytext); return NUMBER; }
+{DEGREE}  { yylval.ival = atoi(yytext); return DEGREE; }
 
 [ \t\n]+   { /* skip whitespace */ }
 

@@ -1,11 +1,10 @@
 %{
     #include <stdio.h>
     #include <stdlib.h>
+    
+    int yylex();
+    void yyerror(const char *s);
 %}
-
-void yyerror(const char *s) {
-    fprintf(stderr, "Error: %s\n", s);
-}
 
 %union {
     float fval;
@@ -15,9 +14,12 @@ void yyerror(const char *s) {
 %token FAR NEAR
 %token OD OS AO
 %token COLON
-%token SPH AXIS CYL
+%token SPH AXIS CYL ADD
+
+%token DP NP AV PRISM
+
 %token <fval> NUMBER 
-%token <ival>DEGREE
+%token <ival> DEGREE
 
 %%
 
@@ -69,3 +71,9 @@ cylinder:
 axis:
     AXIS DEGREE
     ;
+
+%%
+
+void yyerror(const char *s) {
+    fprintf(stderr, "Error: %s\n", s);
+}
