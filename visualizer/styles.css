@@ -1,4 +1,4 @@
-/* visualizer/visualizer.css */
+/* visualizer/styles.css */
 :root {
   --bg: #f2efe9;
   --ink: #0f0f0f;
@@ -48,9 +48,13 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
   align-items: start;
+}
+
+.grid > * {
+  min-width: 0;
 }
 
 /* RIGHT SIDE STACK */
@@ -65,6 +69,7 @@ body {
   border-radius: var(--radius);
   padding: 16px;
   box-shadow: 0 10px 24px var(--shadow);
+  overflow: hidden;
 }
 
 .summary-list {
@@ -140,22 +145,18 @@ body {
 .image-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 2;
-  overflow: hidden;
   border-radius: 12px;
 }
 
 .image-wrap img,
 .image-wrap canvas {
-  position: absolute;
-  inset: 0;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
 }
 
 .image-wrap img {
-  visibility: hidden;
+  display: none;
 }
 
 /* PRESCRIPTION TABLE */
@@ -224,4 +225,22 @@ body {
 .prescription-table tr:hover td {
   background: rgba(196, 90, 43, 0.04);
   transition: background 0.2s ease;
+}
+
+.simulation-frame {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #f5f0e8;
+}
+
+.simulation-image {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: blur(var(--astig-blur, 0px));
 }

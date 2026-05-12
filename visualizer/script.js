@@ -1,5 +1,5 @@
 // visualizer/visualizer.js
-const IMAGE_URL = "https://picsum.photos/1200/800";
+const IMAGE_URL = "./balloon_eyetest.png";
 const DATA_URL = "../prescription.json";
 
 const distanceSelect = document.getElementById("distance");
@@ -139,43 +139,67 @@ function fillTable() {
 }
 
 function applyFilters() {
-  if (!prescription || !canvas || !ctx || !img) return;
+    if (!prescription || !canvas || !ctx || !img) return;
 
-  const dist = distanceSelect.value;
-  const eye = eyeSelect.value;
-  const data = prescription?.[dist]?.[eye];
+    const dist = "far"; // or "near"
+    const od = prescription?.[dist]?.right_eye || {};
+    const os = prescription?.[dist]?.left_eye || {};
 
-  const blurPx = dioptersToBlurPx(data?.sphere);
-  const motionPx = cylinderToMotionPx(data?.cylinder);
-  const axisDeg = data?.axis || 0;
+    const w = canvas.width;
+    const h = canvas.height;
 
-  const w = canvas.width;
-  const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
 
-  ctx.clearRect(0, 0, w, h);
+    const halfBlurOD = dioptersToBlurPx(Math.abs(od.sphere)) / 2;
+    const halfBlurOS = dioptersToBlurPx(Math.abs(os.sphere)) / 2;
+    const hasBlur = halfBlurOD > 0 || halfBlurOS > 0;
 
-  // Base blur
-  ctx.filter = `blur(${blurPx}px)`;
-  ctx.drawImage(img, 0, 0, w, h);
-
-  // Directional blur for astigmatism: rotate, draw multiple offsets
-  if (motionPx > 0.5) {
-    const steps = 8;
-    const step = motionPx / steps;
-    ctx.save();
-    ctx.translate(w / 2, h / 2);
-    ctx.rotate((axisDeg * Math.PI) / 180);
-    ctx.translate(-w / 2, -h / 2);
-    ctx.filter = "none";
-
-    for (let i = -steps; i <= steps; i++) {
-      ctx.globalAlpha = 1 / (steps * 2 + 1);
-      ctx.drawImage(img, i * step, 0, w, h);
+    if (!hasBlur) {
+      ctx.filter = "none";
+      ctx.drawImage(img, 0, 0, w, h);
+      return;
     }
 
-    ctx.restore();
-    ctx.globalAlpha = 1;
-  }
+    if (halfBlurOD > 0) drawGradientBlur(halfBlurOD, od.sphere);
+    if (halfBlurOS > 0) drawGradientBlur(halfBlurOS, os.sphere);
+
+    function drawGradientBlur(blurPx, sphereValue) {
+        if (!blurPx) return;
+
+      const slices = 20;
+      const boundaryRatio = 0.2;
+      const midY = h * boundaryRatio;
+      const bottomHeight = h - midY;
+      const sliceH = bottomHeight / slices;
+      const boundaryStrength = sphereValue < 0 ? 1 : 0;
+      const boundaryBlur = blurPx * boundaryStrength;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, w, midY);
+      ctx.clip();
+      ctx.filter = `blur(${boundaryBlur}px)`;
+      ctx.drawImage(img, 0, 0, w, h);
+      ctx.restore();
+
+        for (let i = 0; i < slices; i++) {
+      const t = i / (slices - 1); // 0 mid -> 1 bottom
+      const strength = sphereValue < 0 ? 1 - t : t; // myopia top-strong, hyperopia bottom-strong
+      const sliceBlur = blurPx * strength;
+
+        ctx.save();
+        ctx.beginPath();
+      ctx.rect(0, midY + i * sliceH, w, sliceH + 1);
+        ctx.clip();
+
+        ctx.filter = `blur(${sliceBlur}px)`;
+        ctx.drawImage(img, 0, 0, w, h);
+
+        ctx.restore();
+        }
+
+        ctx.filter = "none";
+    }
 }
 
 async function init() {
@@ -184,11 +208,17 @@ async function init() {
   buildSummary();
 
   if (img && canvas) {
-    img.onload = () => {
+    const render = () => {
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       applyFilters();
     };
+
+    if (img.complete && img.naturalWidth) {
+      render();
+    } else {
+      img.onload = render;
+    }
   }
 
   if (distanceSelect) distanceSelect.addEventListener("change", applyFilters);
