@@ -50,7 +50,7 @@
 
               <!-- NEAR -->
               <tr>
-                <td rowspan="2">Presbyopia</td>
+                <td rowspan="2">Cerca</td>
                 <td>OD</td>
                 <td id="nearOdSphere">-</td>
                 <td id="nearOdCylinder">-</td>
@@ -64,42 +64,88 @@
                 <td id="nearOsAxis">-</td>
               </tr>
 
-              <!-- OTHER FIELDS -->
-              <tr class="other-fields-header">
-                <td colspan="5">Other Fields</td>
-              </tr>
+              <!-- OTROS CAMPOS -->
+            <tr class="other-fields-header">
+                <td colspan="5">Campos Adicionales</td>
+            </tr>
 
-              <tr>
-                <td colspan="2">Addition</td>
+            <tr>
+                <td colspan="2"><strong>Adición</strong></td>
                 <td colspan="3" id="additionValue">-</td>
-              </tr>
+            </tr>
 
-              <tr>
-                <td colspan="2">Pupillary Distance</td>
+            <tr class="notes-row">
+                <td colspan="5">
+                <div class="annotation-block">
+                    Aumento adicional utilizado para lectura o tareas de visión cercana.
+                    Es equivalente a la diferencia entre la prescripción de cerca y la de 
+                    lejos.
+                </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Distancia Interpupilar</strong></td>
                 <td colspan="3" id="pdValue">-</td>
-              </tr>
+            </tr>
 
-              <tr>
-                <td colspan="2">Near-Point</td>
+            <tr class="notes-row">
+                <td colspan="5">
+                <div class="annotation-block">
+                    Distancia entre el centro de ambas pupilas, utilizada para alinear correctamente 
+                    las lentes de las gafas.
+                </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Punto Próximo</strong></td>
                 <td colspan="3" id="nearPointValue">-</td>
-              </tr>
+            </tr>
 
-              <tr>
-                <td colspan="2">Visual Acuity</td>
+            <tr class="notes-row">
+                <td colspan="5">
+                <div class="annotation-block">
+                    Distancia más cercana a la que el ojo puede enfocar cómodamente.
+                </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Agudeza Visual</strong></td>
                 <td colspan="3" id="visualAcuityValue">-</td>
-              </tr>
+            </tr>
+
+            <tr class="notes-row">
+                <td colspan="5">
+                <div class="annotation-block">
+                    Nivel de claridad o nitidez visual medido bajo condiciones estandarizadas.
+                </div>
+                </td>
+            </tr>
             </tbody>
           </table>
         </aside>
+        <!-- RIGHT STACK -->
+        <section class="right-column">
 
-        <!-- SIMULATION PANEL -->
-        <section class="panel">
-          <h2>Simulation</h2>
+            <section class="panel">
+            <h2>Resumen</h2>
+            <ul id="summaryList" class="summary-list">
+              <li>El resumen de la receta se mostrará aquí.</li>
+            </ul>
+            </section>
 
-          <div id="simulationPlaceholder" class="sim-placeholder">
-            Simulation view coming soon
-          </div>
+             <!-- SIMULATION PANEL -->
+            <section class="panel">
+            <h2>Simulación</h2>
+
+            <div id="simulationPlaceholder" class="sim-placeholder">
+                placeholder para la simulación de visión
+            </div>
+            </section>
         </section>
+       
       </section>
     </main>
 

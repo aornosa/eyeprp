@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include "prescription.h"
 
@@ -38,6 +39,14 @@ int main(int argc, char *argv[]) {
     if (input != stdin) {
         fclose(input);
     }
-    
+
+    // Start http serv for the visualizer since fucking CORS wont let me fetch()
+    // unless running a local server
+    system("python3 -m http.server 8000 > /dev/null 2>&1 &");
+    printf("Started local server at http://localhost:8000\n");
+
+    // Open the visualizer in the default web browser
+    system("xdg-open http://localhost:8000/visualizer/visualizer.html");
+    printf("Opened visualizer in web browser\n");
     return 0;
 }
