@@ -1,0 +1,4 @@
+FAR: 
+    OD: SPH +1.5
+ADD 1.25
+DP 62

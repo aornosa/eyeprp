@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Visualizador Oftalmológico</title>
+
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <main class="app">
+      <header class="header">
+        <h1>Visualizador Oftalmológico</h1>
+        <p>Resumen de la receta y visión simulada lado a lado.</p></br>
+      </header>
+
+      <section class="grid">
+        <!-- PRESCRIPTION PANEL -->
+        <aside class="panel">
+          <h2>Prescripción</h2>
+
+          <table class="prescription-table">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Ojo</th>
+                <th>Esfera</th>
+                <th>Cilindro</th>
+                <th>Eje</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <!-- DISTANCE VISION -->
+              <tr>
+                <td rowspan="2">Distancia</td>
+                <td>OD</td>
+                <td id="farOdSphere">-</td>
+                <td id="farOdCylinder">-</td>
+                <td id="farOdAxis">-</td>
+              </tr>
+
+              <tr>
+                <td>OS</td>
+                <td id="farOsSphere">-</td>
+                <td id="farOsCylinder">-</td>
+                <td id="farOsAxis">-</td>
+              </tr>
+
+              <!-- NEAR -->
+              <tr>
+                <td rowspan="2">Presbyopia</td>
+                <td>OD</td>
+                <td id="nearOdSphere">-</td>
+                <td id="nearOdCylinder">-</td>
+                <td id="nearOdAxis">-</td>
+              </tr>
+
+              <tr>
+                <td>OS</td>
+                <td id="nearOsSphere">-</td>
+                <td id="nearOsCylinder">-</td>
+                <td id="nearOsAxis">-</td>
+              </tr>
+
+              <!-- OTHER FIELDS -->
+              <tr class="other-fields-header">
+                <td colspan="5">Other Fields</td>
+              </tr>
+
+              <tr>
+                <td colspan="2">Addition</td>
+                <td colspan="3" id="additionValue">-</td>
+              </tr>
+
+              <tr>
+                <td colspan="2">Pupillary Distance</td>
+                <td colspan="3" id="pdValue">-</td>
+              </tr>
+
+              <tr>
+                <td colspan="2">Near-Point</td>
+                <td colspan="3" id="nearPointValue">-</td>
+              </tr>
+
+              <tr>
+                <td colspan="2">Visual Acuity</td>
+                <td colspan="3" id="visualAcuityValue">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </aside>
+
+        <!-- SIMULATION PANEL -->
+        <section class="panel">
+          <h2>Simulation</h2>
+
+          <div id="simulationPlaceholder" class="sim-placeholder">
+            Simulation view coming soon
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
