@@ -72,6 +72,29 @@ void prescription_to_json(FILE *output) {
         
         fprintf(output, "  }\n");
     }
+
+     int wrote_any = current_prescription.has_farsight || current_prescription.has_nearsight;
+
+    if (current_prescription.has_add) {
+        fprintf(output, "%s  \"add\": %.2f\n", wrote_any ? ",\n" : "", current_prescription.addition);
+        wrote_any = 1;
+    }
+    if (current_prescription.has_dp) {
+        fprintf(output, "%s  \"dp\": %d\n", wrote_any ? ",\n" : "", current_prescription.pupillary_distance);
+        wrote_any = 1;
+    }
+    if (current_prescription.has_np) {
+        fprintf(output, "%s  \"np\": %.2f\n", wrote_any ? ",\n" : "", current_prescription.near_point);
+        wrote_any = 1;
+    }
+    if (current_prescription.has_av) {
+        fprintf(output, "%s  \"av\": %.2f\n", wrote_any ? ",\n" : "", current_prescription.av);
+        wrote_any = 1;
+    }
+    if (current_prescription.has_prism) {
+        fprintf(output, "%s  \"prism\": %.2f\n", wrote_any ? ",\n" : "", current_prescription.prism);
+        wrote_any = 1;
+    }
     
     fprintf(output, "}\n");
 }

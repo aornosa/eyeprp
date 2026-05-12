@@ -33,6 +33,10 @@
 %%
 
 prescription:
+    base_prescription opt_fields
+    ;
+
+base_prescription:
     prescription_far {
         current_prescription.has_farsight = 1;
     }
@@ -44,6 +48,7 @@ prescription:
         current_prescription.has_nearsight = 1;
     }
     ;
+
 prescription_far:
     FAR COLON eye_block {
         current_prescription.farsight = $3;
@@ -132,6 +137,38 @@ axis:
         EyeParams params = {0};
         params.axis = $2;
         $$ = params;
+    }
+    ;
+
+opt_fields:
+    /* empty */
+    | opt_fields opt_field
+    ;
+opt_field:
+    ADD NUMBER {
+        if (current_prescription.has_add) yyerror("Duplicate ADD");
+        current_prescription.addition = $2;
+        current_prescription.has_add = 1;
+    }
+    | DP NUMBER {
+        if (current_prescription.has_dp) yyerror("Duplicate DP");
+        current_prescription.pupillary_distance = $2;
+        current_prescription.has_dp = 1;
+    }
+    | NP NUMBER {
+        if (current_prescription.has_np) yyerror("Duplicate NP");
+        current_prescription.near_point = $2;
+        current_prescription.has_np = 1;
+    }
+    | AV NUMBER {
+        if (current_prescription.has_av) yyerror("Duplicate AV");
+        current_prescription.av = $2;
+        current_prescription.has_av = 1;
+    }
+    | PRISM NUMBER {
+        if (current_prescription.has_prism) yyerror("Duplicate PRISM");
+        current_prescription.prism = $2;
+        current_prescription.has_prism = 1;
     }
     ;
 

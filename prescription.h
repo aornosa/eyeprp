@@ -19,9 +19,6 @@ typedef struct
     int has_od;
     int has_os;
     int has_ao;
-
-    float addition;
-    int pupillary_distance;
 }EyeBlock;
 
 typedef struct  
@@ -31,6 +28,19 @@ typedef struct
 
     int has_farsight;
     int has_nearsight;
+
+    
+    float addition;
+    int pupillary_distance;
+    float near_point;
+    float av;
+    float prism;
+
+    int has_add;
+    int has_dp;
+    int has_np;
+    int has_av;
+    int has_prism;
 }Prescription;
 
 extern Prescription current_prescription;
