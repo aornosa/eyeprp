@@ -1,0 +1,10 @@
+{
+  "far": {
+    "right_eye": {"sphere": -1.25, "cylinder": -0.50, "axis": 90},
+    "left_eye": {"sphere": -1.25, "cylinder": -0.50, "axis": 180}
+  },
+  "near": {
+    "right_eye": {"sphere": -1.25, "cylinder": -0.50, "axis": 90},
+    "left_eye": {"sphere": 1.00, "cylinder": -0.25, "axis": 180}
+  }
+}

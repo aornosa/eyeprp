@@ -1,14 +1,15 @@
 %{
+    #include "prescription.h"
     #include "parser.tab.h"
     #include <stdio.h>
 %}
 
-%option noyywrap noinput nounput
+%option noyywrap noinput nounput yylineno
 
 
 DIGIT   [0-9]
-NUMBER  [+-]?{DIGIT}+("."{DIGIT}+)?
-DEGREE  {DIGIT}+[°º]
+NUMBER  [+-]?{DIGIT}+("."{DIGIT}+)
+DEGREE  {DIGIT}+[°º]?
 
 %%
 
@@ -37,7 +38,7 @@ DEGREE  {DIGIT}+[°º]
 {NUMBER}  { yylval.fval = (float)atof(yytext); return NUMBER; }
 {DEGREE}  { yylval.ival = atoi(yytext); return DEGREE; }
 
-[ \t\n]+   { /* skip whitespace */ }
+[ \t\r\n]+   { /* skip whitespace */ }
 
 . {
     fprintf(stderr, "Unexpected character: %s\n", yytext);
