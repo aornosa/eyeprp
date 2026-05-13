@@ -56,8 +56,9 @@ function buildSummary() {
   const list = document.getElementById("summaryList");
   if (!list) return;
 
-  const farOD = prescription?.far?.right_eye;
-  const farOS = prescription?.far?.left_eye;
+  const summaryBlock = prescription?.far ?? prescription?.near;
+  const farOD = summaryBlock?.right_eye;
+  const farOS = summaryBlock?.left_eye;
 
   if (!farOD && !farOS) {
     list.innerHTML = "<li>No summary available.</li>";
@@ -80,6 +81,10 @@ function buildSummary() {
   };
 
   const items = [];
+
+  if (prescription?.far && prescription?.near) {
+    items.push({ text: "Presbicia", severity: "medium" });
+  }
 
   if (sphereMax > thresholds.sphere.perfect) {
     const severity = getSeverityInfo(sphereMax, thresholds.sphere);

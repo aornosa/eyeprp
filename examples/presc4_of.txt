@@ -1,0 +1,9 @@
+FAR: 
+    OD: SPH -1.25 CYL -0.50 AXIS 90
+    OS: SPH -1.25 CYL -0.25 AXIS 180
+NEAR:
+    OD: SPH +1.5 
+    OS: SPH +1.5
+ADD 2.00
+DP 63
+NP 2.00
