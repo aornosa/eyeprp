@@ -1,6 +1,8 @@
 FAR: 
     OD: SPH -1.25 CYL -0.50 AXIS 90
     OS: SPH -1.25 CYL -0.25 AXIS 180
+FAR:
+    OD: SPH +1.5
 NEAR:
     OD: SPH +1.5 
     OS: SPH +1.5

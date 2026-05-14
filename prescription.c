@@ -69,7 +69,7 @@ void prescription_to_json(FILE *output) {
         fprintf(output, "  }\n");
     }
 
-     int wrote_any = current_prescription.has_farsight || current_prescription.has_nearsight;
+    int wrote_any = current_prescription.has_farsight || current_prescription.has_nearsight;
 
     if (current_prescription.has_add) {
         fprintf(output, "%s  \"add\": %.2f\n", wrote_any ? ",\n" : "", current_prescription.addition);

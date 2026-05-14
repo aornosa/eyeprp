@@ -138,8 +138,8 @@ function fillTable() {
   setText("nearOsAxis", nearOS?.axis ?? "-");
 
   setText("additionValue", formatNum(prescription?.add));
-  setText("pdValue", prescription?.dp ?? "-");
-  setText("nearPointValue", formatNum(prescription?.np));
+  setText("pdValue", prescription?.dp+"mm" ?? "-");
+  setText("nearPointValue", prescription?.np+"cm" ?? "-");
   setText("visualAcuityValue", formatNum(prescription?.av));
 }
 
@@ -188,7 +188,7 @@ function applyFilters() {
       ctx.restore();
 
         for (let i = 0; i < slices; i++) {
-      const t = i / (slices - 1); // 0 mid -> 1 bottom
+      const t = i / (slices - 1);                   // 0 mid -> 1 bottom
       const strength = sphereValue < 0 ? 1 - t : t; // myopia top-strong, hyperopia bottom-strong
       const sliceBlur = blurPx * strength;
 

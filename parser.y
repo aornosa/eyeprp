@@ -37,27 +37,32 @@ prescription:
     ;
 
 base_prescription:
-    prescription_far {
-        current_prescription.has_farsight = 1;
-    }
-    | prescription_near {
-        current_prescription.has_nearsight = 1;
-    }
-    | prescription_far prescription_near {
-        current_prescription.has_farsight = 1;
-        current_prescription.has_nearsight = 1;
-    }
+    prescription_blocks
+    ;
+
+prescription_blocks:
+    prescription_blocks presc_block
+    | presc_block
+    ;
+
+presc_block:
+    prescription_far
+    | prescription_near
     ;
 
 prescription_far:
     FAR COLON eye_block {
+        if (current_prescription.has_farsight) yyerror("Duplicate FAR Prescription");
         current_prescription.farsight = $3;
+        current_prescription.has_farsight = 1;
     }
     ;
 
 prescription_near:
     NEAR COLON eye_block {
+        if (current_prescription.has_nearsight) yyerror("Duplicate NEAR Prescription");
         current_prescription.nearsight = $3;
+        current_prescription.has_nearsight = 1;
     } 
     ;
 
@@ -69,6 +74,8 @@ eye_block:
 single_block:
     single_eye {$$ = $1;}
     | single_eye single_eye {
+        if ($1.has_od && $2.has_od) yyerror("Duplicate OD Information");
+        if ($1.has_os && $2.has_os) yyerror("Duplicate OS Information");
         $$ = $1;
         if ($2.has_od) {
             $$.od = $2.od;
@@ -177,4 +184,5 @@ extern int yylineno;
 
 void yyerror(const char *s) {
     fprintf(stderr, "Error at line %d: %s\n", yylineno, s);
+    exit(1); // Exit on error
 }
